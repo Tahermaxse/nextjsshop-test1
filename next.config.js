@@ -13,7 +13,7 @@ const nextConfig = {
   },
   experimental: {
     serverActions: {
-      allowedOrigins: ['localhost:3000', 'https://nextjsshop-test1.vercel.app', 'https://www.nextjsshop.com'],
+      allowedOrigins: ['localhost:3000', 'https://nextjsshop-test1.vercel.app', 'https://www.nextjsshop.com','https://nextjsshop-test.vercel.app/'],
     },
   },
   // This enables `.mdx` pages inside `app` or `pages`
