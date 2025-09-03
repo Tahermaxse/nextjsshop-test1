@@ -1,0 +1,21 @@
+import { viewport, siteConfig, generatePageSEO } from "@/config/site";
+import { Metadata,  } from "next";
+
+export {viewport};
+export const metadata: Metadata = generatePageSEO(
+  "Forgot-Password",
+  siteConfig.description,
+  "/forgot-password"
+);
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+
+  return (
+    <>
+      {children}
+    </>
+  );
+}

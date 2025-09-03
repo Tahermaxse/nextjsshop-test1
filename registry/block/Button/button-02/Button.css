@@ -1,0 +1,111 @@
+
+.button02 {
+    color: #f9f4eb;
+    letter-spacing: -.02em;
+    text-transform: uppercase;
+    -webkit-user-select: none;
+    user-select: none;
+    font-size: .875rem;
+    line-height: 1em;
+    text-decoration: none;
+    display: grid
+}
+
+.button02_bg {
+    grid-area: 1/1;
+    grid-template-columns: auto 1fr auto;
+    display: grid
+}
+
+.button02_bg-left {
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    display: grid
+}
+
+.button02_bg-pixel {
+    aspect-ratio: 1;
+    background-color: #000;
+    width: 100%;
+    height: 100%
+}
+
+.button02_bg-mid {
+    background-color: #000
+}
+
+.button02_bg-right {
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    display: grid
+}
+
+.button02_inner {
+    grid-area: 1/1;
+    padding: .875rem 2.25rem;
+    display: grid;
+    overflow: clip
+}
+
+.button02 {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .button02_bg-pixel {
+      transition: translate .25s steps(2, end);
+  }
+  
+  .button02_bg-left .button02_bg-pixel:is(:nth-child(1), :nth-child(2), :nth-child(3), :nth-child(4)) {
+      opacity: 0;
+  }
+  
+  .button02_bg-right .button02_bg-pixel:is(:nth-child(5), :nth-child(6), :nth-child(7), :nth-child(8)) {
+      opacity: 0;
+  }
+  
+  .button02_inner::before {
+      content: attr(data-text);
+    grid-area: 1 / 1;
+    pointer-events: none;
+    white-space: nowrap;
+      translate: 0 -200%;
+  }
+  
+  .button02_text {
+      transform-origin: bottom center;
+  }
+  
+  @media (hover: hover) and (pointer: fine) {
+    .button02:is(:hover, :focus-visible) .button02_bg-left .button02_bg-pixel:is(:nth-child(5), :nth-child(6), :nth-child(7), :nth-child(8)) {
+          translate: 0 -200%;
+      }
+    
+    .button02:is(:hover, :focus-visible) .button02_bg-right .button02_bg-pixel:is(:nth-child(1), :nth-child(2), :nth-child(3), :nth-child(4)) {
+          translate: 0 200%;
+      }
+    
+    .button02:is(:hover, :focus-visible) .button02_inner::before {
+        translate: 0 0;
+      transition: translate .35s steps(4, end);
+    }
+    
+    .button02:is(:hover, :focus-visible) .button02_text {
+        scale: 1 0;
+      transition: scale .3s steps(2, end);
+      transition-delay: .06s;
+    }
+  }
+  
+  /* style only for touch devices */
+  @media (hover: none) or (pointer: coarse) {
+     .button02:active .button02_bg-left .button02_bg-pixel:is(:nth-child(5), :nth-child(6), :nth-child(7), :nth-child(8)) {
+          translate: 0 -200%;
+      transition: translate 0s;
+      }
+    
+    .button02:active .button02_bg-right .button02_bg-pixel:is(:nth-child(1), :nth-child(2), :nth-child(3), :nth-child(4)) {
+          translate: 0 200%;
+      transition: translate 0s;
+      }
+  }
+  

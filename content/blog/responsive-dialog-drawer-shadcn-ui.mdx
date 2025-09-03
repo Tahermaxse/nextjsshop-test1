@@ -1,0 +1,361 @@
+---
+title: "Creating Responsive Dialog and Drawer Components with shadcn/ui"
+description: "Learn how to build adaptive modal components that transform from dialogs on desktop to drawers on mobile for optimal user experience."
+date: "2025-07-20"
+category: "react"
+author:
+  name: "Taher Hathi"
+  avatar: "https://avatars.githubusercontent.com/u/138603168?s=400&u=96ef6f2056ae8afa6b920fda6c5d48d46aab557e&v=4"
+coverImage: "https://ik.imagekit.io/nextjsshop/blog/blog1.png?updatedAt=1753174912991"
+---
+
+Creating responsive modal components that adapt to different screen sizes is crucial for modern web applications. While desktop users prefer centered dialogs, mobile users benefit from drawer-style interfaces that slide up from the bottom. This article shows how to build a unified component that seamlessly transitions between these two patterns.
+
+## The Challenge with Traditional Modals
+
+Standard dialog components work well on desktop but can feel cramped and awkward on mobile devices. The small screen real estate makes centered modals difficult to interact with, especially when they contain forms or lengthy content. Users often struggle with:
+
+- Limited viewport space being consumed by the modal
+- Difficulty reaching close buttons in corner positions
+- Poor thumb accessibility on larger phones
+- Awkward scrolling within constrained modal heights
+
+## Building the Adaptive Solution
+
+Our approach uses a single component that detects screen size and renders appropriately. The component leverages Radix UI primitives for accessibility while applying different styling patterns based on device capabilities.
+
+### Key Features
+
+The responsive dialog/drawer component includes several thoughtful design decisions:
+
+**Mobile-First Drawer Experience**
+- Slides up from the bottom for natural thumb interaction
+- Includes a visual drag handle for intuitive gesture recognition
+- Maximizes content area while maintaining familiar mobile patterns
+- Positions close button in easily reachable locations
+
+**Desktop Dialog Behavior**
+- Centers content with appropriate sizing constraints
+- Maintains traditional modal interaction patterns
+- Provides subtle animations that feel polished
+- Uses backdrop blur effects for modern visual appeal
+
+**Consistent Styling Across Breakpoints**
+- Unified color scheme that adapts to light and dark modes
+- Smooth transitions between mobile and desktop layouts
+- Accessible focus management regardless of presentation style
+- Proper ARIA labeling for screen readers
+
+## Implementation Details
+
+The component uses a custom hook to detect mobile screens and conditionally renders different layouts. Here's how the magic happens:
+
+### Device Detection Strategy
+
+```typescript
+const isMobile = useIsMobile();
+```
+
+This hook determines whether to show the drawer or dialog version, typically checking for screen widths below tablet breakpoints.
+
+### Mobile Drawer Layout
+
+For mobile devices, the component renders at the bottom of the screen with:
+- Rounded top corners for visual polish
+- A drag handle indicator for gesture hints  
+- Slide-up animations that feel natural
+- Full-width content area maximization
+
+The mobile version uses these key styling patterns:
+```css
+/* Bottom positioning with slide animations */
+fixed inset-x-0 bottom-0
+/* Rounded top corners only */
+rounded-t-[10px]
+/* Slide animation classes */
+data-[state=open]:slide-in-from-bottom
+```
+
+### Desktop Dialog Experience
+
+Desktop users receive a traditional centered modal with:
+- Centered positioning with maximum width constraints
+- Subtle zoom and fade animations
+- Backdrop blur effects for modern aesthetics
+- Optimal focus management
+
+The desktop styling emphasizes:
+```css
+/* Centered positioning */
+left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]
+/* Maximum width constraints */
+w-full max-w-lg
+/* Refined animations */
+data-[state=open]:zoom-in-95
+```
+
+## Enhanced User Experience Benefits
+
+This adaptive approach delivers significant UX improvements:
+
+**Mobile Users Benefit From**
+- Larger interaction targets that work well with touch
+- Content that doesn't compete with virtual keyboards
+- Familiar bottom-sheet patterns from native mobile apps
+- Gesture-friendly close mechanisms
+
+**Desktop Users Enjoy**
+- Focused content that doesn't dominate the entire screen
+- Precise mouse interaction with appropriately sized targets
+- Professional appearance that matches desktop software conventions
+- Keyboard navigation that follows expected patterns
+
+## Accessibility Considerations
+
+The component maintains accessibility across both presentations:
+
+- Proper focus trapping keeps keyboard users within the modal content
+- ARIA labels provide context for screen readers
+- High contrast ratios ensure visibility in both light and dark themes  
+- Keyboard shortcuts work consistently across device types
+- Focus management returns users to appropriate trigger elements on close
+
+## Complete Implementation Code
+
+Here's the full implementation of the responsive dialog/drawer component:
+
+```tsx
+"use client";
+
+import * as React from "react";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { X } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
+
+const Dialog = DialogPrimitive.Root;
+
+const DialogTrigger = DialogPrimitive.Trigger;
+
+const DialogPortal = DialogPrimitive.Portal;
+
+const DialogClose = DialogPrimitive.Close;
+
+const DialogOverlay = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Overlay
+    ref={ref}
+    className={cn(
+      "fixed inset-0 z-50 bg-black/80 dark:bg-transparent dark:backdrop-brightness-100 dark:backdrop-blur-lg  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      className,
+    )}
+    {...props}
+  />
+));
+DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
+
+const DialogContent = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
+>(({ className, children, ...props }, ref) => {
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    // Drawer style for mobile
+    return (
+      <DialogPortal>
+        <DialogOverlay />
+        <DialogPrimitive.Content
+          ref={ref}
+          className={cn(
+            "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background p-6 shadow-lg duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+            className,
+          )}
+          {...props}
+        >
+          <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+          {children}
+          <DialogPrimitive.Close className="absolute bg-gray-300 dark:bg-zinc-700 p-1 rounded-full right-4 top-4 opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </DialogPrimitive.Close>
+        </DialogPrimitive.Content>
+      </DialogPortal>
+    );
+  }
+
+  // Desktop dialog style
+  return (
+    <DialogPortal>
+      <DialogOverlay />
+      <DialogPrimitive.Content
+        ref={ref}
+        className={cn(
+          "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] rounded-lg",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+        <DialogPrimitive.Close className="absolute bg-gray-300 dark:bg-zinc-700 p-1 rounded-full right-4 top-4 opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+          <X className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </DialogPrimitive.Close>
+      </DialogPrimitive.Content>
+    </DialogPortal>
+  );
+});
+DialogContent.displayName = DialogPrimitive.Content.displayName;
+
+const DialogHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col space-y-1.5 text-center sm:text-left",
+      className,
+    )}
+    {...props}
+  />
+);
+
+DialogHeader.displayName = "DialogHeader";
+
+const DialogFooter = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+      className,
+    )}
+    {...props}
+  />
+);
+
+DialogFooter.displayName = "DialogFooter";
+
+const DialogTitle = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Title>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Title
+    ref={ref}
+    className={cn(
+      "text-lg font-semibold leading-none tracking-tight",
+      className,
+    )}
+    {...props}
+  />
+));
+DialogTitle.displayName = DialogPrimitive.Title.displayName;
+
+const DialogDescription = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Description
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+));
+DialogDescription.displayName = DialogPrimitive.Description.displayName;
+
+export {
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogClose,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+};
+```
+
+## Integration and Usage
+
+Using the component requires minimal changes to existing code:
+
+```jsx
+<Dialog>
+  <DialogTrigger>Open Modal</DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Responsive Modal</DialogTitle>
+      <DialogDescription>
+        This modal adapts to your screen size automatically.
+      </DialogDescription>
+    </DialogHeader>
+    
+    {/* Your content here */}
+    
+    <DialogFooter>
+      <DialogClose>Close</DialogClose>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+```
+
+The component automatically detects screen size and applies appropriate styling without requiring additional props or configuration.
+
+## Performance and Bundle Considerations
+
+The implementation adds minimal overhead while delivering maximum flexibility:
+
+- Single component reduces bundle size compared to separate dialog/drawer libraries
+- Conditional rendering prevents unnecessary DOM elements
+- Efficient CSS classes minimize runtime style calculations
+- Shared Radix primitives reduce overall dependency weight
+
+## Customization Options
+
+The component supports extensive customization while maintaining responsive behavior:
+
+**Styling Flexibility**
+- Tailwind classes can be overridden through className props
+- Custom animations can replace defaults
+- Brand colors integrate seamlessly through CSS custom properties
+- Spacing and sizing adapt to design system requirements
+
+**Behavioral Modifications**
+- Breakpoint thresholds can be adjusted for specific use cases
+- Animation durations and easing can be customized
+- Close behavior can be modified for different interaction patterns
+- Content scrolling can be configured per device type
+
+## Best Practices and Recommendations
+
+When implementing responsive modals, consider these guidelines:
+
+**Content Strategy**
+- Keep mobile content concise and scannable
+- Use progressive disclosure for complex forms
+- Prioritize primary actions in easily reachable locations
+- Test with actual devices rather than browser responsive modes
+
+**Performance Optimization**
+- Lazy load modal content when possible
+- Implement proper cleanup for animation listeners
+- Consider preloading critical modal assets
+- Monitor bundle size impact of responsive components
+
+**Testing Approaches**
+- Verify behavior across multiple device categories
+- Test with various screen orientations
+- Validate accessibility with assistive technologies
+- Check performance impact on lower-end devices
+
+## Conclusion
+
+Responsive dialog and drawer components represent a significant improvement over traditional one-size-fits-all modals. By adapting presentation to device capabilities, we create more intuitive and accessible user experiences. The implementation combines modern React patterns with thoughtful UX design to deliver components that feel native on every device.
+
+This approach demonstrates how thoughtful component design can eliminate the need for separate mobile and desktop implementations while actually improving the user experience on both platforms. As responsive design continues evolving, components like this show the path toward truly adaptive user interfaces that work seamlessly across the full spectrum of modern devices.

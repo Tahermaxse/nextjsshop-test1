@@ -1,0 +1,139 @@
+    <svg
+                            className="absolute -left-[72%] bottom-0 overflow-visible aspect-[2/1] w-[250%] translate-y-[calc(50%_-122px_+_25vw)] sm:translate-y-1/2 blur-[calc(12vw)] sm:blur-[56px] saturate-150 transform-[translate3d(0, 0, 0)] transform-gpu [will-change:transform,filter]"
+                            fill="none"
+                            viewBox="0 0 701 467"
+                            xmlns="http://www.w3.org/2000/svg"
+                            >
+                            <g className="transform-gpu">
+                                <path
+                                className="will-change-transform"
+                                d="M407.64 132.674 511.646 108l81.075 17.082V326.27H419.103l-31.111-98.696 19.648-94.9Z"
+                                fill="#5DA200"
+                                style={{
+                                    translate: "none",
+                                    rotate: "none",
+                                    scale: "none",
+                                    transformOrigin: "0px 0px",
+                                }}
+                                data-svg-origin="387.99200439453125 108"
+                                transform="matrix(1,0,0,1,28.74517,-29.04939)"
+                                />
+                                <path
+                                className="will-change-transform"
+                                d="m357.667 186.498 72.448-19.143 56.475 13.253v156.09H365.651l-21.671-76.572 13.687-73.628Z"
+                                fill="#FFC700"
+                                style={{
+                                    translate: "none",
+                                    rotate: "none",
+                                    scale: "none",
+                                    transformOrigin: "0px 0px",
+                                }}
+                                data-svg-origin="343.9800109863281 167.35499572753906"
+                                transform="matrix(1,0,0,1,-13.85475,16.2996)"
+                                />
+                                <path
+                                className="will-change-transform"
+                                d="m471.471 217.57 58.714-9.647 45.77 6.679v78.666h-98.013l-17.563-38.591 11.092-37.107Z"
+                                fill="#FFC700"
+                                style={{
+                                    translate: "none",
+                                    rotate: "none",
+                                    scale: "none",
+                                    transformOrigin: "0px 0px",
+                                }}
+                                data-svg-origin="460.3790283203125 207.92300415039062"
+                                transform="matrix(1,0,0,1,-20.0504,-24.02453)"
+                                />
+                                <path
+                                className="will-change-transform"
+                                d="m160.042 229.351 80.266-16.432 62.569 11.376v133.988H168.888l-24.009-65.73 15.163-63.202Z"
+                                fill="#FFC700"
+                                style={{
+                                    translate: "none",
+                                    rotate: "none",
+                                    scale: "none",
+                                    transformOrigin: "0px 0px",
+                                }}
+                                data-svg-origin="144.87899780273438 212.91900634765625"
+                                transform="matrix(1,0,0,1,5.94095,-24.62094)"
+                                />
+                                <path
+                                className="will-change-transform"
+                                d="m290.066 207.03 73.697-19.143 57.449 13.253v156.091H298.188l-22.044-76.573 13.922-73.628Z"
+                                fill="#FFC700"
+                                style={{
+                                    translate: "none",
+                                    rotate: "none",
+                                    scale: "none",
+                                    transformOrigin: "0px 0px",
+                                }}
+                                data-svg-origin="276.14398193359375 187.88699340820312"
+                                transform="matrix(1,0,0,1,-4.71402,18.86475)"
+                                />
+                                <path
+                                className="will-change-transform"
+                                d="m136.004 208.083 73.697-19.143 57.449 13.253v156.09H144.127l-22.045-76.572 13.922-73.628Z"
+                                fill="#FFC700"
+                                style={{
+                                    translate: "none",
+                                    rotate: "none",
+                                    scale: "none",
+                                    transformOrigin: "0px 0px",
+                                }}
+                                data-svg-origin="122.08200073242188 188.9399871826172"
+                                transform="matrix(1,0,0,1,-31.97792,8.48938)"
+                                />
+                                <path
+                                className="will-change-transform"
+                                d="m243.752 200.799 86.172-18.321 67.174 12.683v149.388H253.249l-25.776-73.284 16.279-70.466Z"
+                                fill="#7C5FE4"
+                                style={{
+                                    translate: "none",
+                                    rotate: "none",
+                                    scale: "none",
+                                    transformOrigin: "0px 0px",
+                                }}
+                                data-svg-origin="227.47299194335938 182.47799682617188"
+                                transform="matrix(1,0,0,1,7.73574,1.32788)"
+                                />
+                                <path
+                                className="will-change-transform"
+                                d="m417.299 212.382 39.278-7.668 30.618 5.309v62.518h-65.567l-11.749-30.669 7.42-29.49Z"
+                                fill="#A40099"
+                                style={{
+                                    translate: "none",
+                                    rotate: "none",
+                                    scale: "none",
+                                    transformOrigin: "0px 0px",
+                                }}
+                                data-svg-origin="409.8790588378906 204.71400451660156"
+                                transform="matrix(1,0,0,1,-12.41836,30.78094)"
+                                />
+                                <path
+                                className="will-change-transform"
+                                d="m145.653 194.349 93.505-19.143 72.89 13.253v156.09h-156.09l-27.97-76.573 17.665-73.627Z"
+                                fill="#FF69C4"
+                                style={{
+                                    translate: "none",
+                                    rotate: "none",
+                                    scale: "none",
+                                    transformOrigin: "0px 0px",
+                                }}
+                                data-svg-origin="127.98797607421875 175.20599365234375"
+                                transform="matrix(1,0,0,1,31.04237,29.68189)"
+                                />
+                                <path
+                                className="will-change-transform"
+                                d="m117.665 194.349 93.505-19.143 72.89 13.253v156.09H127.97L100 267.976l17.665-73.627Z"
+                                fill="#C91884"
+                                style={{
+                                    translate: "none",
+                                    rotate: "none",
+                                    scale: "none",
+                                    transformOrigin: "0px 0px",
+                                }}
+                                data-svg-origin="100 175.20599365234375"
+                                transform="matrix(1,0,0,1,31.77804,23.83535)"
+                                />
+                            </g>
+                            </svg>

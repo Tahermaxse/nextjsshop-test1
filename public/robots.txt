@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Allow: /components/
+Disallow: /api/
+Disallow: /login
+Sitemap: https://nextjsshop.com/sitemap.xml

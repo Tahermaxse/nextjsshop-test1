@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+  <path xmlns="http://www.w3.org/2000/svg" d="M 0 4 C 0 1.791 1.791 0 4 0 L 12 0 C 14.209 0 16 1.791 16 4 L 16 8 C 16 10.209 14.209 12 12 12 L 4 12 C 1.791 12 0 10.209 0 8 Z" transform="translate(2 4) rotate(90 8 6)" fill="currentColor"/>
+  <path xmlns="http://www.w3.org/2000/svg" d="M 2.333 5 C 2.702 5 3 5.298 3 5.667 L 3 14.333 C 3 14.702 2.702 15 2.333 15 L 2.333 15 C 1.597 15 1 14.403 1 13.667 L 1 6.333 C 1 5.597 1.597 5 2.333 5 Z" fill="currentColor" opacity="0.5"/>
+  <path xmlns="http://www.w3.org/2000/svg" d="M 17.667 5 C 18.403 5 19 5.597 19 6.333 L 19 13.667 C 19 14.403 18.403 15 17.667 15 L 17.667 15 C 17.298 15 17 14.702 17 14.333 L 17 5.667 C 17 5.298 17.298 5 17.667 5 Z" fill="currentColor" opacity="0.5"/>
+</svg>

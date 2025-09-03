@@ -1,0 +1,236 @@
+---
+title: "Creating a Pressable Button with Depress Effect in Nextjs/React"
+description: "Learn how to build an interactive button that simulates a physical press by depressing its middle layer, using React and Framer Motion for smooth animations."
+date: "2025-08-20"
+category: ["react"]
+author:
+  name: "Taher Hathi"
+  avatar: "https://avatars.githubusercontent.com/u/138603168?s=400&u=96ef6f2056ae8afa6b920fda6c5d48d46aab557e&v=4"
+coverImage: "https://ik.imagekit.io/nextjsshop/blog/creating-pressable-button-react-or-nextjs.webp?updatedAt=1755671538652"
+---
+
+Creating interactive buttons that mimic real-world physical interactions can greatly enhance user experience in web applications. A pressable button with a depress effect, where the middle layer sinks in on click, provides tactile feedback and makes interfaces feel more engaging. This article guides you through building such a button step by step using React and Framer Motion.
+
+## The Challenge with Standard Buttons
+
+Traditional buttons in web apps often lack depth and responsiveness. They might change color or scale slightly on hover or click, but they don't simulate the physical "press" of a real button. This can make interfaces feel flat, especially in games, dashboards, or interactive UIs where feedback is key. Common issues include:
+
+- Lack of visual depth, making buttons feel static
+- Inadequate feedback on press, leading to uncertainty if the click registered
+- Poor accessibility for touch devices without smooth gestures
+- Inconsistent behavior across mouse and touch inputs
+
+## Building the Adaptive Solution
+
+Our approach creates a layered button using images (or SVGs) for bottom, middle, and top layers. The middle layer will animate downward on press, creating a depress effect. We'll use React for state management and Framer Motion for spring-based animations to make it feel natural.
+
+### Key Features
+
+The pressable button includes several design considerations:
+
+**Press and Release Mechanics**
+- Depresses on mouse down or touch start for immediate feedback
+- Returns to original position on release with a bouncy spring animation
+- Stays pressed during hold for sustained interaction
+- Handles both mouse and touch events seamlessly
+
+**Visual and Animation Details**
+- Layered structure with static bottom and top, movable middle
+- Smooth translation and scaling for a realistic sink-in effect
+- Customizable depress depth (e.g., 24px) and scale (e.g., 0.98)
+- Transition effects that feel responsive and fun
+
+**Consistent Behavior Across Devices**
+- Works on desktop with mouse and mobile with touch
+- Accessible with ARIA labels and proper event handling
+- Supports light and dark modes via class names
+- Efficient performance with minimal DOM updates
+
+## Implementation Details
+
+The button uses a custom state to track press status and Framer Motion's `motion` component for the middle layer. Here's the step-by-step breakdown:
+
+### Step 1: Set Up Your React Project
+
+Start with a basic React app. If using Create React App:
+
+```bash
+npx create-react-app pressable-button-app
+cd pressable-button-app
+```
+
+Install Framer Motion:
+
+```bash
+npm install framer-motion
+```
+
+### Step 2: Prepare Button Assets
+
+You'll need three SVG images: bottom (base), middle (pressable part), and top (overlay). For this example, use placeholders from a public source or create simple ones. Here's an example using URLs from the original design:
+
+- Bottom: https://nextjsshop.com/button/bottom.svg
+- Middle: https://nextjsshop.com/button/middle1.svg
+- Top: https://nextjsshop.com/button/top.svg
+
+Place them in your public folder or use remote URLs.
+
+### Step 3: Create the Button Component
+
+In `src/components/PressableButton.tsx`, set up the basic structure with state for press tracking.
+
+```tsx
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+```
+
+Add hooks for press state and event handlers.
+
+### Step 4: Handle Press Events
+
+Use `onMouseDown`, `onMouseUp`, `onTouchStart`, and `onTouchEnd` to manage the press state.
+
+### Step 5: Animate the Middle Layer
+
+Wrap the middle image in `motion.img` and animate its `y` (translateY) and `scale` based on the press state. Use a spring transition for smoothness.
+
+### Step 6: Style the Layers
+
+Position layers absolutely, with z-indices to stack them correctly. Set a fixed width (e.g., 320px) for the button.
+
+## Accessibility Considerations
+
+Ensure the button is accessible:
+
+- Use a `<button>` element for semantics
+- Add `aria-label` for screen readers
+- Maintain focus styles and keyboard support
+- High contrast for visibility in different modes
+- Test with tools like Lighthouse for ARIA compliance
+
+## Complete Implementation Code
+
+Here's the full code for the pressable button component:
+
+```tsx
+"use client";
+
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+
+const PressableButton = () => {
+  const [isPressed, setIsPressed] = useState(false);
+
+  const handlePressStart = () => {
+    setIsPressed(true);
+  };
+
+  const handlePressEnd = () => {
+    setIsPressed(false);
+  };
+
+  return (
+    <button
+      className="relative cursor-pointer select-none w-[320px]"
+      onMouseDown={handlePressStart}
+      onMouseUp={handlePressEnd}
+      onTouchStart={handlePressStart}
+      onTouchEnd={handlePressEnd}
+      aria-label="Pressable button"
+    >
+      <img
+        alt="Button bottom layer"
+        className="z-10 relative"
+        src="https://nextjsshop.com/button/bottom.svg"
+      />
+      <motion.img
+        alt="Button middle layer"
+        className="z-20 absolute left-0 top-0"
+        src="https://nextjsshop.com/button/middle.svg"
+        animate={{ y: isPressed ? 24 : 0, scale: isPressed ? 0.98 : 1 }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      />
+      <img
+        alt="Button top layer"
+        className="z-30 absolute left-0 top-0"
+        src="https://nextjsshop.com/button/top.svg"
+      />
+    </button>
+  );
+};
+
+export default PressableButton;
+```
+
+Note: Adjust z-indices as needed (z-10, z-20, z-30) to ensure proper layering.
+
+## Integration and Usage
+
+Integrate the button into your app like this:
+
+```tsx
+import PressableButton from "./components/PressableButton";
+
+function App() {
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <PressableButton />
+    </div>
+  );
+}
+
+export default App;
+```
+
+## Live Example
+
+<PressableButton />
+
+## Performance and Bundle Considerations
+
+This implementation is lightweight:
+
+- Framer Motion adds minimal overhead for animations
+- No unnecessary re-renders thanks to React state management
+- Image layers load efficiently with lazy loading if needed
+- Works well on low-end devices with optimized springs
+
+## Customization Options
+
+Customize easily:
+
+**Animation Tweaks**
+- Change `stiffness` and `damping` for different bounce feels
+- Adjust `y: 24` to deeper or shallower depress
+- Add rotation or other transforms for unique effects
+
+**Styling Flexibility**
+- Replace images with CSS shapes for non-image versions
+- Add hover effects via CSS classes
+- Integrate with Tailwind or other frameworks
+- Support themes by swapping image sources
+
+## Best Practices and Recommendations
+
+Follow these for optimal results:
+
+**User Testing**
+- Test on real devices for touch feedback
+- Gather feedback on press depth and speed
+- Ensure it doesn't interfere with rapid clicks
+
+**Optimization**
+- Use WebP or optimized SVGs for images
+- Memoize components if used in lists
+- Profile animations for 60fps performance
+
+**Edge Cases**
+- Handle long presses or drags
+- Support disabled states
+- Integrate with form submissions or navigation
+
+## Conclusion
+
+Building a pressable button with a depress effect elevates your UI from basic to immersive. By leveraging React's state and Framer Motion's animations, you create components that delight users across devices. This step-by-step guide provides a solid foundation—experiment and adapt it to your projects for truly interactive experiences.
+
+
